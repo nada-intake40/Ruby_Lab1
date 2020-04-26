@@ -6,10 +6,42 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+        <a class="navbar-brand text-white " href="/">Blog</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse mr-2" id="navbarSupportedContent">
+          <ul class="navbar-nav ">
+            <p class="navbar-text ">
+              <% if user_signed_in? %>
+                Logged in as <strong><%= current_user.email %></strong>.
+                <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link nav-item mx-4' %> |
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link nav-item  mx-4'  %>
+              <% else %>
+                <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link nav-item mx-4'  %> |
+                <%= link_to "Login", new_user_session_path, :class => 'navbar-link nav-item mx-4'  %>
+              <% end %>
+            </p>
+          </ul>
+        </div>
+    </nav>  
+    
+    <% if notice %>
+      <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
+        
+    <div class="container my-5">
+      <%= yield %>
+    </div>
+
   </body>
 </html>
